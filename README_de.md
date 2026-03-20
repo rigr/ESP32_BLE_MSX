@@ -1,80 +1,80 @@
-# ESP32 MSX Mouse - Version 004
+# ESP32 MSX Maus
 
-Ein leistungsstarkes und optimiertes ESP32-basiertes Gerät zur Emulation einer Maus für MSX-Computersysteme. Diese Firmware ermöglicht die Verwendung einer Bluetooth-leistenden Maus als MSX-Maus-Eingabe per direktem GPIO-Interface.
+Ein ESP32-basiertes Gerät zur Emulation einer Maus für Roland S-750 Sampler und möglicherweise MSX-Computersysteme. Dieser Arduino-Sketch ermöglicht die Verwendung einer BLE-Maus mit einem ESP32 und  über die GPIO-Schnittstelle mit einem alten Sampler.
 
-## Features
+## Funktionen
 
-- **Optimierte GPIO-Operationen**: Verwendung direkter Register-Zugriffe für maximale Geschwindigkeit
-- **BLE-Unterstützung**: Verbindung mit Bluetooth-leistenden Mäusen über NimBLE
-- **Zoom-Kontrolle**: Dynamische Zoomanpassung von 20% bis 200% (anpassbar)
-- **Web-Interface**: Einfache Konfiguration über Web-Oberfläche
+- **GPIO-Operationen**: Verwendung direkter Register-Zugriffe für Geschwindigkeit
+- **BLE-Unterstützung**: Verbindung mit BLE-Mäusen über NimBLE
+- **Zoom-Kontrolle**: Dynamische Zoom-Anpassung von 20% bis 200% (anpassbar) über das Scrollrad der Maus
+- **Web-Interface**: Konfiguration über Web-Interface
 - **OTA-Firmware-Update**: Update der Firmware direkt über das Web-Interface
-- **Thread-sichere Operationen**: Mutex-geschützte Operationen für stabile Performance
+- **Thread-sichere Operationen**: Mutex-geschützte Operationen für Stabilität
 - **Serielle Schnittstelle**: Vollständige Konfiguration über seriellen Monitor
 
 ## Technische Spezifikationen
 
-- **Microcontroller**: ESP32-WROOM-32D (30 Pins) - esp32-board-definition 3.0.0 von Espressif Systems
-- **BLE**: NimBLE Version 2.1.0 by h2zero
-- **GPIO-Optimierung**: Direkter Register-Zugriff für schnelle Kommunikation
-- **MSX-Protokoll**: Optimiertes Strobe-Sync für vollständige Kompatibilität
-- **Pins**: 14, 27, 26, 25, 33, 32, 13, 35, 2
+- **Mikrocontroller**: ESP32-WROOM-32D (30 Pins), Verwenden Sie die esp32-Board-Konfiguration 3.0.0 von espressif systems
+- **BLE**: NimBLE Version 2.1.0 von h2zero
+- **MSX-Protokoll**: Strobe-Sync für Kompatibilität
+- **Pins**: 14, 27, 26, 25 für Datenleitungen, 33, 32 für Mausknöpfe, 13 für das Strobe-Signal, 35 für manuelles Scannen und Verbinden, 2 für die Onboard-LED
+- Alle Pins sind auf derselben Seite des ESP32-Boards und die Verbindung ist dadurch einfach herstellbar.
 
 ## Pin-Belegung
 
 ```
-D14 = MX0 (Datenstrecke)
-D27 = MX1 (Datenstrecke)
-D26 = MX2 (Datenstrecke)
-D25 = MX3 (Datenstrecke)
+D14 = MX0 (Datenbus)
+D27 = MX1 (Datenbus)
+D26 = MX2 (Datenbus)
+D25 = MX3 (Datenbus)
 D33 = MX4 (Linker Knopf)
 D32 = MX5 (Rechter Knopf)
 D13 = CS (Strobe-Eingang)
 D35 = Scan-Trigger (low für manuelles Scannen)
 D2  = LED (eingebaute Status-LED)
-D0  = BOOT-Knopf (Verwaltung des Web-Interfaces)
+D0  = BOOT-Knopf (Web-Interface-Verwaltung)
 ```
 
 ## Installation
 
 ### Voraussetzungen
 
-- ESP32-Entwicklungsboard (ESP32-WROOM-32D)
-- Arduino IDE oder PlatformIO
-- Bluetooth-leistende Maus
-- MSX-Computersystem (empfohlen)
+- ESP32-Entwicklungsboard (ESP32-WROOM-32D) - Version 3.0.0 
+- Arduino IDE
+- Bluetooth-Maus (ich verwende eine billige chinesische Maus, die sich als "BT5.2" meldet)
+- Roland S-750 Sampler und wahrscheinlich andere sowie MSX-Computer
 
 ### Firmware-Installation
 
-1. Öffne die Arduino IDE (oder PlatformIO)
-2. Wählen Sie das ESP32-WROOM-32D Board unter Tools → Board
-3. Laden Sie die gewünschte Firmware (z. B. ESP32_MSX_v004.ino) hoch
-4. Starten Sie das Setup über serielle Schnittstelle mit 115200 Baud
-5. Oder installiere mittels Arduino-IDE und via USB
+1. Arduino IDE öffnen
+2. ESP32-WROOM-32D-Board unter Tools → Board wählen und darauf achten, Version 3.0.0 der Board-Definition zu verwenden
+3. NimBLE 2.1.0 von h2zero
+4. Die gewünschte Firmware hochladen (zu finden im source-Ordner)
+5. Setup über serielle Schnittstelle mit 115200 Baud starten
 
-## Funktionsweise
+## Betrieb
 
-Das ESP32 simuliert die MSX-Maus-Schnittstelle durch direktes Manipulieren der GPIO-Pins. Die Eingabedaten von BLE-Mäusen werden in Echtzeit an MSX übertragen.
+Das ESP32 simuliert die MSX-Maus-Schnittstelle durch direktes Manipulieren der GPIO-Pins. Die Eingabedaten von BLE-Mäusen werden in Echtzeit an den Sampler übertragen.
 
 ### Aktivierungsmethoden
 
-- **BOOT-Knopf**: Halten Sie 3 Sekunden zum Starten des Web-Interfaces, 6 Sekunden zum Stoppen
+- **BOOT-Knopf**: 3 Sekunden gedrückt halten, um einen Zugangspunkt (MSX_MOUSE, Passwort 12345678) zu starten, der ein Web-Interface (192.168.4.1) bietet, 6 Sekunden zum Stoppen
 - **Serielles Kommando**: "web" oder "webinterface" zum Toggle, "web on" zum Starten, "web off" zum Stoppen
-- **Manuelle Scan-Trigger**: Pull D35 low zum Scannen nach Geräten
+- **Manueller Scan-Trigger**: D35 auf low ziehen, um nach Geräten zu scannen
 
 ### Serielle Kommandos
 
 | Kommando | Beschreibung |
-|----------|-------------|
+|---------|-------------|
 | `help` / `h` | Zeige alle verfügbaren Kommandos |
-| `s` | Scan und verbinde die erste HID-Maus |
+| `s` | Scan und Verbindung der ersten HID-Maus |
 | `scan` | Scan Geräte-Liste (20s) |
 | `list` | Zeige Geräte-Liste |
-| `select <nr>` | Wähle Gerät aus der Liste aus |
+| `select <nr>` | Wähle Gerät aus Liste |
 | `d` | Trenne Maus |
 | `scale` | Zeige aktuellen Zoom |
 | `scale X` | Setze Zoom auf X (4-40, 20%-200%) |
-| `web` | Schalte Web-Interface an/aus |
+| `web` | Toggle Web-Interface an/aus |
 | `web on` | Starte Web-Interface |
 | `web off` | Stoppe Web-Interface |
 | `web status` | Zeige Web-Interface Status |
@@ -82,15 +82,15 @@ Das ESP32 simuliert die MSX-Maus-Schnittstelle durch direktes Manipulieren der G
 
 ## Web-Interface
 
-Das Web-Interface ermöglicht eine komfortable Fernkonfiguration über einen Webbrowser:
+Das Web-Interface ermöglicht eine bequeme Fernkonfiguration über einen Webbrowser. Es kann durch Drücken des Boot-Knopfes für drei Sekunden oder über die serielle Schnittstelle aktiviert werden. Der Zugangspunkt heißt MSX_MOUSE, das Passwort ist 12345678, das Webinterface ist auf Seite 182.168.4.1
 
 - **Verbindungsstatus**: Zeigt aktuelle Verbindungsinformationen
 - **BLE-Geräte**: Scannen und Auswahl verfügbarer Geräte
-- **Zoomsteuerung**: Dynamische Zoom-Anpassung (20%-200%)
+- **Zoom-Kontrolle**: Dynamische Zoom-Anpassung (20%-200%)
 - **Maus-Daten**: Live-Anzeige von X/Y-Bewegungen und Knopfzuständen
-- **Firmware-Update**: OTA-Update direkt über Web-Oberfläche
+- **Firmware-Update**: OTA-Update direkt über Web-Interface
 
-Zugriff erfolgt über die IP-Adresse des ESP32 (z. B. 192.168.4.1), sobald das Web-Interface aktiv ist.
+Zugriff ist über die IP-Adresse des ESP32 (z.B. 192.168.4.1) verfügbar, wenn das Web-Interface aktiv ist.
 
 ## Konfiguration
 
@@ -104,15 +104,15 @@ const char minScale = 4;          // Minimal: 20%
 const char maxScale = 40;         // Maximal: 200%
 ```
 
-Die Zoom-Funktion kann auch über Scrollrad der BLE-Maus dynamisch angepasst werden.
+Die Zoom-Funktion kann auch dynamisch über das Scrollrad der BLE-Maus angepasst werden.
 
 ### BLE-Verbindung
 
-Das System scannt automatisch nach HID-Maus-Geräten. Es wird die stärkste Verbindung auf Basis des RSSI-Werts bevorzugt.
-
+Das System scannt automatisch nach HID-Mäusen. Es bevorzugt die stärkste Verbindung basierend auf dem RSSI-Wert. Ich schalte den Sampler ein, dann die Maus, drücke beide Knöpfe (das bringt sie in den Pairing-Modus) und bewege sie, nach ein paar Sekunden ist das ESP32 mit der Maus verbunden.
+ 
 ## Entwicklungsstand
 
-- **Version 0.04**: Ausführliche Kommentare, korrigierte OTA-Funktionalität, ohne NVS-Speicher
+- **Version 0.04**: Funktioniert endlich.
 
 ## Lizenz
 
@@ -120,22 +120,17 @@ Dieses Projekt ist unter der MIT-Lizenz lizenziert - siehe die LICENSE-Datei fü
 
 ## Mitwirkung
 
-Beitragende sind herzlich eingeladen! Bitte senden Sie ein Pull-Request mit Ihren Verbesserungen oder melden Sie Probleme im GitHub-Issues-Tracker.
+Grundlegende Beiträge kamen von NYYRIKKY und Peter Ulrich - danke an beide!
+
+Weitere Mitwirkende sind willkommen! Bitte senden Sie einen Pull-Request mit Verbesserungen oder melden Sie Probleme im GitHub-Tracker. Nutzen und kopieren Sie es.
 
 ## Danksagung
 
 - NimBLE-Bibliothek für BLE-Unterstützung
-- Arduino für die ESP32-Unterstützung
-- MSX-Community für die Protokoll-Definitionen
+- Arduino für ESP32-Unterstützung
+- MSX-Community für Protokoll-Definitionen
 
-## Kontakt
-
-Falls Sie Fragen haben oder Unterstützung benötigen:
-
-- Erstellen Sie einen Issue auf GitHub
-- Senden Sie eine E-Mail an den Maintainer
-- Treten Sie der MSX-Community bei (wenn verfügbar)
 
 ---
 
-*Dieses Projekt ist für den Einsatz mit Roland S-750 Samplern konzipiert und wurde entwickelt, um die historischen Sampler auch ohne Roland MU-1-mouse benutzen zu können.*
+*Dieses Projekt ist für die Verwendung auf Roland S-750 Samplern konzipiert und wurde entwickelt, um die MU-1-Maus zu ersetzen.*
