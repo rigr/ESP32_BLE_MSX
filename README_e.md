@@ -134,4 +134,4 @@ More contributors are welcome! Please send a pull request with improvements or r
 
 *This project is designed for use on Roland S-750 samplers and was developed to replace the MU-1-mouse.*
 
-*Here some technical background to the strobe signal of the sampler:  x- and y-axis separatly: [background.md](./background.md)*
+*Here some technical background to the strobe signal of the sampler: [background.md](./background.md)*
