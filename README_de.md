@@ -134,3 +134,5 @@ Weitere Mitwirkende sind willkommen! Bitte senden Sie einen Pull-Request mit Ver
 ---
 
 *Dieses Projekt ist für die Verwendung auf Roland S-750 Samplern konzipiert und wurde entwickelt, um die MU-1-Maus zu ersetzen.*
+
+*Hier noch zum technischen Hintergrund des strobe Signals des Samplers: [background.md](./background.md)*
