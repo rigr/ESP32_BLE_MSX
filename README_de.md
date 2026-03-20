@@ -14,7 +14,7 @@ Ein leistungsstarkes und optimiertes ESP32-basiertes Gerät zur Emulation einer 
 
 ## Technische Spezifikationen
 
-- **Microcontroller**: ESP32-WROOM-32D (30 Pins)
+- **Microcontroller**: ESP32-WROOM-32D (30 Pins) - esp32-board-definition 3.0.0 von Espressif Systems
 - **BLE**: NimBLE Version 2.1.0 by h2zero
 - **GPIO-Optimierung**: Direkter Register-Zugriff für schnelle Kommunikation
 - **MSX-Protokoll**: Optimiertes Strobe-Sync für vollständige Kompatibilität
@@ -50,6 +50,7 @@ D0  = BOOT-Knopf (Verwaltung des Web-Interfaces)
 2. Wählen Sie das ESP32-WROOM-32D Board unter Tools → Board
 3. Laden Sie die gewünschte Firmware (z. B. ESP32_MSX_v004.ino) hoch
 4. Starten Sie das Setup über serielle Schnittstelle mit 115200 Baud
+5. Oder installiere mittels Arduino-IDE und via USB
 
 ## Funktionsweise
 
@@ -137,4 +138,4 @@ Falls Sie Fragen haben oder Unterstützung benötigen:
 
 ---
 
-*Dieses Projekt ist für den Einsatz auf MSX-Computersystemen konzipiert und wurde entwickelt, um die historische Computer-Emulation zu unterstützen.*
+*Dieses Projekt ist für den Einsatz mit Roland S-750 Samplern konzipiert und wurde entwickelt, um die historischen Sampler auch ohne Roland MU-1-mouse benutzen zu können.*
