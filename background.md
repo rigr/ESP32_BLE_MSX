@@ -30,7 +30,18 @@ then there is LOW for about 35 microseconds and again HIGH for another about 35 
 
 It was tricky to teach the esp32 this language. The MU-1-mouse, that in fact is a MSX-mouse, was able to talk like that.
 
-I also registered some sequences using pulseview. If interested you can find them below.
+## Pulseview files of mouse movement
 
-## Contents from the '/media/user/README_1.md' markdown file:
-Read more [here](./pix/README_2.md) # It works!
+If interested - here some sequences of a real MU-1-mouse I recorded using pulseview - moving the x- and y-axis separatly:
+
+[Roland Mouse x-axis left](./pulse/romaux--.sr)
+
+[Roland Mouse x-axis left](./pulse/romaux++.sr)
+
+[Roland Mouse y-axis down](./pulse/romauy--2.sr)
+
+[Roland Mouse y-axis down](./pulse/romauy--2a.sr)
+
+[Roland Mouse y-axis up](./pulse/romauy++1.sr)
+
+[Roland Mouse y-axis up](./pulse/romauy++2.sr)
