@@ -1,24 +1,24 @@
-# ESP32 MSX Mouse - Version 004
+# ESP32 MSX Mouse
 
-A powerful and optimized ESP32-based device for emulating a mouse for MSX computer systems. This firmware allows using a Bluetooth-enabled mouse as MSX mouse input via direct GPIO interface.
+A ESP32-based device for emulating a mouse for Roland S-750 Samplers and maybe MSX computer systems. This Arduino sketch allows to use a BLE-mouse and the ESP32 GPIO interface.
 
 ## Features
 
-- **Optimized GPIO operations**: Using direct register access for maximum speed
+- **GPIO operations**: Using direct register access for speed
 - **BLE support**: Connection with Bluetooth-enabled mice via NimBLE
-- **Zoom control**: Dynamic zoom adjustment from 20% to 200% (adjustable)
-- **Web interface**: Simple configuration through web interface
+- **Zoom control**: Dynamic zoom adjustment from 20% to 200% (adjustable) using the scrollwheel of the mouse
+- **Web interface**: Configuration through web interface
 - **OTA firmware update**: Update of firmware directly through the web interface
-- **Thread-safe operations**: Mutex-protected operations for stable performance
+- **Thread-safe operations**: Mutex-protected operations for stability
 - **Serial interface**: Complete configuration through serial monitor
 
 ## Technical Specifications
 
-- **Microcontroller**: ESP32-WROOM-32D (30 Pins)
+- **Microcontroller**: ESP32-WROOM-32D (30 Pins), Use the esp32 board configuration 3.0.0 by espressif systems
 - **BLE**: NimBLE Version 2.1.0 by h2zero
-- **GPIO optimization**: Direct register access for fast communication
-- **MSX protocol**: Optimized strobe sync for complete compatibility
-- **Pins**: 14, 27, 26, 25, 33, 32, 13, 35, 2
+- **MSX protocol**: strobe sync for compatibility
+- **Pins**: 14, 27, 26, 25 for data lines, 33, 32 fpr mouse buttons, 13 for the strobe signal, 35 for manual scan and connect, 2 for the onboard LED
+- All Pins are on the same side of the esp32 board and connection is made easy this way.
 
 ## Pin Assignment
 
@@ -39,25 +39,25 @@ D0  = BOOT button (web interface management)
 
 ### Prerequisites
 
-- ESP32 development board (ESP32-WROOM-32D)
-- Arduino IDE or PlatformIO
-- Bluetooth-enabled mouse
-- MSX computer system (recommended)
+- ESP32 development board (ESP32-WROOM-32D) - 3.0.0 
+- Arduino IDE
+- Bluetooth-enabled mouse (I use a cheap chinese mouse that introduces itself as "BT5.2")
+- Roland S-750 Sampler and probably others as well as MSX computers
 
 ### Firmware Installation
 
-1. Open the Arduino IDE (or PlatformIO)
-2. Select the ESP32-WROOM-32D board under Tools → Board
-3. Upload the desired firmware (e.g. ESP32_MSX_v004.ino)
+1. Open the Arduino IDE
+2. Select the ESP32-WROOM-32D board under Tools → Board and take care, use version 3.0.0 of the board definition
+3. Upload the desired firmware (e.g. ESP32_MSX.ino)
 4. Start setup through serial interface at 115200 baud
 
 ## Operation
 
-The ESP32 simulates the MSX mouse interface by directly manipulating GPIO pins. Input data from BLE mice is transmitted in real-time to MSX.
+The ESP32 simulates the MSX mouse interface by directly manipulating GPIO pins. Input data from BLE mice is transmitted in real-time to the sampler.
 
 ### Activation methods
 
-- **BOOT button**: Hold 3 seconds to start web interface, 6 seconds to stop
+- **BOOT button**: Hold 3 seconds to start an access point (MSX_MOUSE, password 12345678) offering a web interface (192.168.4.1), 6 seconds to stop
 - **Serial command**: "web" or "webinterface" to toggle, "web on" to start, "web off" to stop
 - **Manual scan trigger**: Pull D35 low to scan for devices
 
@@ -81,7 +81,7 @@ The ESP32 simulates the MSX mouse interface by directly manipulating GPIO pins. 
 
 ## Web Interface
 
-The web interface allows comfortable remote configuration through a web browser:
+The web interface allows comfortable remote configuration through a web browser. It can be activated by pressing the boot-button for three seconds or using the serial interface. Access point name is MSX_MOUSE, password is 12345678, webinterface is on page 182.168.4.1
 
 - **Connection status**: Shows current connection information
 - **BLE devices**: Scanning and selection of available devices
@@ -107,11 +107,11 @@ The zoom function can also be dynamically adjusted using the scroll wheel of the
 
 ### BLE Connection
 
-The system automatically scans for HID mouse devices. It prefers the strongest connection based on RSSI value.
-
+The system automatically scans for HID mouse devices. It prefers the strongest connection based on RSSI value. I swith on the sampler, then swith on the mouse, press both buttons (that puts it in pairing mode) and move it and after a few seconds the ESP32 is connected to the mosue.
+ 
 ## Development Status
 
-- **Version 0.04**: Detailed comments, corrected OTA functionality, without NVS storage
+- **Version 0.04**: it finally works. 
 
 ## License
 
@@ -119,7 +119,9 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Contribution
 
-Contributors are welcome! Please send a pull request with improvements or report issues in the GitHub issues tracker.
+Basic contributions came from NYYRIKKY and Peter Ulrich - thanks to both of you!
+
+More contributors are welcome! Please send a pull request with improvements or report issues in the GitHub issues tracker. Copy it and use it.
 
 ## Acknowledgments
 
@@ -127,14 +129,7 @@ Contributors are welcome! Please send a pull request with improvements or report
 - Arduino for ESP32 support
 - MSX Community for protocol definitions
 
-## Contact
-
-If you have questions or need assistance:
-
-- Create an issue on GitHub
-- Send an email to the maintainer
-- Join the MSX community (if available)
 
 ---
 
-*This project is designed for use on MSX computer systems and was developed to support historical computer emulation.*
+*This project is designed for use on Roland S-750 samplers and was developed to replace the MU-1-mouse.*
