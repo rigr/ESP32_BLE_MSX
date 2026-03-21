@@ -49,7 +49,7 @@ D0  = BOOT-Knopf (Web-Interface-Verwaltung)
 1. Arduino IDE öffnen
 2. ESP32-WROOM-32D-Board unter Tools → Board wählen und darauf achten, Version 3.0.0 der Board-Definition zu verwenden
 3. NimBLE 2.1.0 von h2zero
-4. Die gewünschte Firmware hochladen (zu finden im source-Ordner)
+4. Die gewünschte [Firmware](./source/ESP32_MSX.ino) hochladen (zu finden im source-Ordner)
 5. Setup über serielle Schnittstelle mit 115200 Baud starten
 
 ## Betrieb
