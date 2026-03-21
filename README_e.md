@@ -48,7 +48,7 @@ D0  = BOOT button (web interface management)
 
 1. Open the Arduino IDE
 2. Select the ESP32-WROOM-32D board under Tools → Board and take care, use version 3.0.0 of the board definition
-3. Upload the desired firmware (e.g. ESP32_MSX.ino)
+3. Upload the desired [Firmware](./source/ESP32_MSX.ino) - can be found in the source folder
 4. Start setup through serial interface at 115200 baud
 
 ## Operation
