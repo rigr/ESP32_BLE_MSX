@@ -125,7 +125,6 @@ bool bootButtonPressed = false;
 bool lastBootButtonState = false;
 
 // Zeit-Schwelle für verschiedene Aktionen
-// const unsigned long ZOOM_SAVE_THRESHOLD = 5000;      // 5 Sekunden für Zoom-Speicherung
 const unsigned long WEB_START_BOOT_THRESHOLD = 3000; // 3 Sekunden für Web-Start (Boot-Knopf)
 const unsigned long WEB_STOP_BOOT_THRESHOLD = 6000;   // 6 Sekunden für Web-Stop (Boot-Knopf)
 const unsigned long DEBOUNCE_DELAY = 300;            // 300ms Debounce für Toggle vs Langdruck
@@ -244,18 +243,13 @@ void checkLongButtonPresses() {
       }
       bootButtonPressed = false; // Mehrfach-Aktionen verhindern
     } else if (pressDuration < DEBOUNCE_DELAY && !webServerActive && !isScanning && !connected) {
-      // Kurzer Boot-Knopf Druck: BLE-Maus-Scan initiieren, wenn bereits nicht am Scan ist
+      // Kurzer Boot-Knopf Druck: BLE-Maus-Scan initiieren, wenn nicht beim Scan
       if (!isScanning) {
         scanDevices();
       }
       bootButtonPressed = false; // Mehrfach-Aktionen verhindern
     }
   }
-
-  // Sicherheits-Check für sehr lange Drücke, um mehrfaches Speichern zu verhindern
-  // if (leftButtonPressed && (currentTime - leftButtonPressTime >= ZOOM_SAVE_THRESHOLD)) {
-  //   leftButtonPressed = false;
-  // }
 }
 
 // =================================================================
@@ -310,7 +304,7 @@ void startWebServer() {
   server.begin();
   webServerActive = true;
 
-  // LED-Rückmeldung (3 schnelle Blinker)
+  // LED-Rückmeldung (3 kurze Blinker)
   for (int i = 0; i < 3; i++) {
     digitalWrite(LED_PIN, HIGH);
     delay(100);
@@ -505,7 +499,7 @@ void msxProtocolTask(void* parameter) {
       continue;
     }
 
-    // Mausbewegung zusammenführen (geschützt gegen BLE notify Rennen)
+    // Mausbewegung zusammenführen
     if (scaleMutex != NULL) {
       xSemaphoreTake(scaleMutex, portMAX_DELAY);
     }
@@ -630,9 +624,7 @@ void notifyCB(NimBLERemoteCharacteristic* chr, uint8_t* data, size_t len, bool i
 
     if (oldScale != currentScale) {
       scaleChanged = true;
-      // Speichere Zoom-Rate sofort wenn Scroll-Wheel sich ändert
-      // Kein NVS Speichern, da das Crashes verursacht
-     
+      
       Serial.print("ZOOM: Faktor = ");
       Serial.print((int)currentScale);
       Serial.print(" (");
@@ -1270,9 +1262,6 @@ void loop() {
   if (webServerActive) {
     server.handleClient();
   }
-
-  // Behandle Diagnose-Ausgabe
-  // Diagnosemodus wurde entfernt
 
   // Heartbeat alle 5 Sekunden
   if (millis() - lastAlive >= 5000) {
