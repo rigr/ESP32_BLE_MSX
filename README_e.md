@@ -19,6 +19,7 @@ A ESP32-based device for emulating a mouse for Roland S-750 Samplers and maybe M
 - **MSX protocol**: strobe sync for compatibility
 - **Pins**: 14, 27, 26, 25 for data lines, 33, 32 fpr mouse buttons, 13 for the strobe signal, 35 for manual scan and connect, 2 for the onboard LED
 - All Pins are on the same side of the esp32 board and connection is made easy this way.
+- consult  [build.md](./build.md) for infos concerning the wiring. I have mine connected using 9pin cable and think about opening the S-750 to put the ESP32 inside. 
 
 ## Pin Assignment
 
