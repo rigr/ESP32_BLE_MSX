@@ -482,10 +482,10 @@ void msxProtocolTask(void* parameter) {
   static int16_t mx = 0, my = 0;
   static unsigned long lastSend = 0;
 
-  Serial.println("MSX Protokoll Task gestartet auf Core 1 (OPTIMIZED GPIO SHIFTING)");
+  Serial.println("MSX Protokoll Task gestartet auf Core 1");
   Serial.println("Pin-Konfiguration:");
   Serial.println("MX0=14, MX1=27, MX2=26, MX3=25, MX4=33(L), MX5=32(R), CS=13, SCAN=35, LED=2");
-  Serial.println("Optimiertes GPIO: Direkter Register-Zugriff für schnellere Kommunikation");
+  Serial.println("Direkter Register-Zugriff für schnellere Kommunikation");
   Serial.print("Initialer Zoom-Faktor: ");
   Serial.print((int)currentScale);
   Serial.print(" (");
@@ -845,7 +845,7 @@ void setupWebServer() {
 
     // Steuerungen
     html += "<div class='section'>";
-    html += "<h3>STEUREUNGEN</h3>";
+    html += "<h3>STEUERUNGEN</h3>";
     html += "<button onclick=\"location.href='/scan'\">Scan & Maus Verbinden</button>";
     html += "<button onclick=\"location.href='/scanlist'\">Scan Geräte-Liste</button>";
     html += "<button onclick=\"location.href='/disconnect'\">Maus Trennen</button>";
@@ -856,6 +856,8 @@ void setupWebServer() {
     // Info
     html += "<div class='section'>";
     html += "<h3>GERÄTE INFO</h3>";
+    html += "<h4>https://github.com/rigr/ESP32_BLE_MSX";
+    html += "<h4>";
     html += "<div class='data-row'><span class='data-label'>Platine:</span><span class='data-value'>ESP32-WROOM-32D</span></div>";
     html += "<div class='data-row'><span class='data-label'>Verbindung:</span><span class='data-value'>Kombiniert optimiert + Anti-Drift</span></div>";
     html += "<div class='data-row'><span class='data-label'>Pins:</span><span class='data-value'>Daten: 14,27,26,25, Knöpfe: 33,32, Strobe: 13, Scan: 35, LED: 2</span></div>";
@@ -1206,15 +1208,13 @@ void setup() {
 
   Serial.println("====================================");
   Serial.println("ESP32 MSX MAUS - VERSION 004");
-  Serial.println("Optimiertes GPIO + Anti-Drift + Behobene Maus-Tasten-Handling");
+  Serial.println("https://github.com/rigr/ESP32_BLE_MSX");
   Serial.println("NimBLE Version: 2.1.0 by h2zero");
   Serial.println("====================================");
   Serial.println("Web: START via BOOT Knopf (3s), STOP via BOOT Knopf (6s)");
   Serial.println("Hardware: Pull D35 low zum Scannen");
-  Serial.println("BEHEBTE PINOUT: 14,27,26,25,33,32,13,35,2");
-  Serial.println("Optimiertes GPIO: Direkter Register-Zugriff!");
-  Serial.println("Anti-Drift: Strobe Sync für MSX Kompatibilität!");
-  Serial.println("Behobener Zoom-Kontroll (20%-200%) + NO NVS Speicher + Knopf-Release-Detektion!");
+  Serial.println("PINOUT: 14,27,26,25,33,32,13,35,2");
+  Serial.println("Zoom-Kontroll (20%-200%) + Button-release-Detektion!");
   Serial.println("Kommandos: scale X | scale (zeigen) | web (toggle) | s/d/scale/scan/list/select X | help");
 
   // Erstelle Mutex für Thread-Sicherheit
@@ -1253,7 +1253,7 @@ void setup() {
   Serial.println("Manuelles Scan-Trigger auf D35 - pull low zum Scannen");
   Serial.println("BOOT Knopf auf D0 - halte 3s für Web-Interface Start, 6s zum Stoppen");
   Serial.println("MSX Maus bereit!");
-  Serial.println("Linker Maus-Knopf: 5s zum Speichern des Zooms in NVS | Seriell: 'web' um Web-Interface zu toggeln");
+  Serial.println("Seriell: 'web' um Web-Interface zu toggeln");
   Serial.println("Gib 'help' oder 'h' für alle Kommandos ein");
 }
 
