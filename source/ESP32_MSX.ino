@@ -862,12 +862,12 @@ void setupWebServer() {
     // Info
     html += "<div class='section'>";
     html += "<h3>GERÄTE INFO</h3>";
-    html += "<h4>https://github.com/rigr/ESP32_BLE_MSX";
     html += "<h4>";
     html += "<div class='data-row'><span class='data-label'>Platine:</span><span class='data-value'>" + String(ssid) + "</span></div>";
     html += "<div class='data-row'><span class='data-label'>Pins:</span><span class='data-value'>Daten: 14,27,26,25, Knöpfe: 33,32, Strobe: 13, Scan: 35, LED: 2</span></div>";
     html += "<div class='data-row'><span class='data-label'>GPIO Modus:</span><span class='data-value'>Direkter Register-Zugriff synchron zu Strobe</span></div>";
     html += "<div class='data-row'><span class='data-label'>Betriebszeit:</span><span class='data-value'>" + String(millis() / 1000) + "s</span></div>";
+    html += "<h4>https://github.com/rigr/ESP32_BLE_MSX";
     html += "</div>";
 
     // Auto-refresh alle 2 Sekunden
