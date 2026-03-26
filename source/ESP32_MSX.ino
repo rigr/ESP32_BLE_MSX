@@ -66,6 +66,11 @@ bool selectingDevice = false;
 unsigned long selectionStart = 0;
 
 // =================================================================
+// ESP32 serial / MAC
+// =================================================================
+uint64_t chipid;
+
+// =================================================================
 // WiFi/Web Konfiguration
 // =================================================================
 const char* ap_ssid = "MSX_MOUSE";
@@ -485,7 +490,7 @@ void msxProtocolTask(void* parameter) {
   Serial.println("MSX Protokoll Task gestartet auf Core 1");
   Serial.println("Pin-Konfiguration:");
   Serial.println("MX0=14, MX1=27, MX2=26, MX3=25, MX4=33(L), MX5=32(R), CS=13, SCAN=35, LED=2");
-  Serial.println("Direkter Register-Zugriff für schnellere Kommunikation");
+  Serial.println(" ");
   Serial.print("Initialer Zoom-Faktor: ");
   Serial.print((int)currentScale);
   Serial.print(" (");
@@ -765,7 +770,7 @@ void setupWebServer() {
     html += "a:hover{background:#007bff;color:#fff;}";
     html += "</style></head><body>";
 
-    html += "<h1>MSX MOUSE - VERSION 004</h1>";
+    html += "<h1>MSX MOUSE v04</h1>";
 
     // Verbindungsstatus
     html += "<div class='section'>";
@@ -859,9 +864,8 @@ void setupWebServer() {
     html += "<h4>https://github.com/rigr/ESP32_BLE_MSX";
     html += "<h4>";
     html += "<div class='data-row'><span class='data-label'>Platine:</span><span class='data-value'>ESP32-WROOM-32D</span></div>";
-    html += "<div class='data-row'><span class='data-label'>Verbindung:</span><span class='data-value'>Kombiniert optimiert + Anti-Drift</span></div>";
     html += "<div class='data-row'><span class='data-label'>Pins:</span><span class='data-value'>Daten: 14,27,26,25, Knöpfe: 33,32, Strobe: 13, Scan: 35, LED: 2</span></div>";
-    html += "<div class='data-row'><span class='data-label'>GPIO Modus:</span><span class='data-value'>Direkter Register-Zugriff + Strobe Sync</span></div>";
+    html += "<div class='data-row'><span class='data-label'>GPIO Modus:</span><span class='data-value'>Direkter Register-Zugriff synchron zu Strobe</span></div>";
     html += "<div class='data-row'><span class='data-label'>Betriebszeit:</span><span class='data-value'>" + String(millis() / 1000) + "s</span></div>";
     html += "</div>";
 
@@ -1177,7 +1181,6 @@ void handleSerialCommand(String cmd) {
     Serial.println("=== AKTIVIERUNGS METHODEN ===");
     Serial.println("BOOT Knopf: 3s um Web-Interface zu starten, 6s um zu stoppen");
     Serial.println("Serielles Kommando: 'web' oder 'webinterface' um zu toggeln");
-    Serial.println("Linker Maus-Knopf: 5s um Zoom-Wert in NVS-Speicher zu speichern");
     Serial.println("");
     Serial.println("Aktueller Web-Server Status: " + String(webServerActive ? "AKTIV" : "INAKTIV"));
   }
@@ -1205,18 +1208,24 @@ void setup() {
     digitalWrite(LED_PIN, LOW);
     delay(200);
   }
+  
 
-  Serial.println("====================================");
+  uint64_t chipid = ESP.getEfuseMac();
+  Serial.println("=====================================");
   Serial.println("ESP32 MSX MAUS - VERSION 004");
   Serial.println("https://github.com/rigr/ESP32_BLE_MSX");
   Serial.println("NimBLE Version: 2.1.0 by h2zero");
-  Serial.println("====================================");
+  // Print the ID in hexadecimal format
+  Serial.print("ESP32 Chip ID: ");
+  Serial.printf("%04X%08X\n", (uint16_t)(chipid >> 32), (uint32_t)chipid);
+  Serial.println("=====================================");
   Serial.println("Web: START via BOOT Knopf (3s), STOP via BOOT Knopf (6s)");
-  Serial.println("Hardware: Pull D35 low zum Scannen");
-  Serial.println("PINOUT: 14,27,26,25,33,32,13,35,2");
-  Serial.println("Zoom-Kontroll (20%-200%) + Button-release-Detektion!");
   Serial.println("Kommandos: scale X | scale (zeigen) | web (toggle) | s/d/scale/scan/list/select X | help");
-
+  
+  char ssid[23];
+  snprintf(ssid, 23, "ESP32-%04X%08X", (uint16_t)(chipid >> 32), (uint32_t)chipid);
+  Serial.println(ssid);
+  
   // Erstelle Mutex für Thread-Sicherheit
   scaleMutex = xSemaphoreCreateMutex();
   if (scaleMutex == NULL) {
@@ -1250,9 +1259,9 @@ void setup() {
     1
   );
 
-  Serial.println("Manuelles Scan-Trigger auf D35 - pull low zum Scannen");
-  Serial.println("BOOT Knopf auf D0 - halte 3s für Web-Interface Start, 6s zum Stoppen");
-  Serial.println("MSX Maus bereit!");
+  Serial.println("D35 nach Masse ziehen, um nach Devices zu scannen und zu verbinden");
+  Serial.println("BOOT Knopf (D0) - 3s drücken, um Web-Interface zu starten, 6s zum Stoppen");
+  Serial.println("MSX Maus-Emulation bereit!");
   Serial.println("Seriell: 'web' um Web-Interface zu toggeln");
   Serial.println("Gib 'help' oder 'h' für alle Kommandos ein");
 }
