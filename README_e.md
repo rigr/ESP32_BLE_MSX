@@ -120,7 +120,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Contribution
 
-Basic contributions came from NYYRIKKY and Peter Ulrich - thanks to both of you!
+Basic contributions came from NYYRIKKY and Peter Ullrich - thanks to both of you!
 
 More contributors are welcome! Please send a pull request with improvements or report issues in the GitHub issues tracker. Copy it and use it.
 
