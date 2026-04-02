@@ -120,7 +120,7 @@ Dieses Projekt ist unter der MIT-Lizenz lizenziert - siehe die LICENSE-Datei fü
 
 ## Mitwirkung
 
-Grundlegende Beiträge kamen von NYYRIKKY und Peter Ulrich - danke an beide!
+Grundlegende Beiträge kamen von NYYRIKKY und Peter Ullrich - danke an beide!
 
 Weitere Mitwirkende sind willkommen! Bitte senden Sie einen Pull-Request mit Verbesserungen oder melden Sie Probleme im GitHub-Tracker. Nutzen und kopieren Sie es.
 
