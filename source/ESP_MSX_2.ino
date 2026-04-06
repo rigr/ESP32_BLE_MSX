@@ -1088,7 +1088,7 @@ void setupWebServer() {
     html += "a:hover{background:#007bff;color:#fff;}";
     html += "</style></head><body>";
 
-    html += "<h1>MSX MOUSE v013</h1>";
+    html += "<h1>MSX MOUSE v02</h1>";
 
     // Verbindungsstatus
     html += "<div class='section'>";
