@@ -12,6 +12,8 @@ A ESP32-based device for emulating a mouse for Roland S-750 Samplers and maybe M
 - **Thread-safe operations**: Mutex-protected operations for stability
 - **Serial interface**: Complete configuration through serial monitor
 
+ESP_MSX_2.ino now also supports a mouse that introduces itself as BT5.1
+
 ## Technical Specifications
 
 - **Microcontroller**: ESP32-WROOM-32D (30 Pins), Use the esp32 board configuration 3.0.0 by espressif systems
