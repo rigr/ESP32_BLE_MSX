@@ -2,6 +2,8 @@
 
 Ein ESP32-basiertes Gerät zur Emulation einer Maus für Roland S-750 Sampler und möglicherweise MSX-Computersysteme. Dieser Arduino-Sketch ermöglicht die Verwendung einer BLE-Maus mit einem ESP32 und  über die GPIO-Schnittstelle mit einem alten Sampler.
 
+ESP_MSX_2.ino kann jetzt auch mit einer weiteren Maus, die sich als BT5.1 vorstellt.
+
 ## Funktionen
 
 - **GPIO-Operationen**: Verwendung direkter Register-Zugriffe für Geschwindigkeit
